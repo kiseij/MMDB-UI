@@ -5,6 +5,7 @@ import Movies from './components/Movies';
 import InnerMovie from './components/InnerMovie';
 import EditMovie from './components/EditMovie';
 
+// sadasd
 function getAllMovies() {
   const options = {
     method: 'GET'
