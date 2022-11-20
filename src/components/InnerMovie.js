@@ -1,35 +1,60 @@
-import { Button } from "react-bootstrap";
-import { Link, useLoaderData, redirect } from "react-router-dom";
+import { Button, Toast, ToastContainer } from "react-bootstrap";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function goBack(path) {
-    return redirect(path)
-}
+function InnerMovie() {
+  let navigate = useNavigate();
+  const { movie } = useLoaderData();
+  const [show, setShow] = useState(false);
 
-function deleteMovie(id, e) {
+  function deleteMovie(id, e) {
+    
+    
+    // issoktu modalas ir lauktu kol useris paspaus taip noriu trint ir tik tada testu koda zemyn
+    // jei paspaudzia ne, cancel cancel
+
     const options = {
-        method: 'DELETE'
+      method: "DELETE",
     };
 
     fetch(`http://localhost:8080/api/movies/${id}`, options)
-    .then(response => response.json())
-    .then(result => {
-        // TO-DO po sekmingo istrinimo redirectint i home
-        goBack('/')
-    })
-    .catch(error => console.log('error', error));
-}
+      .then((response) => response.json())
+      .then((result) => {
+        // setShow(true);
+        navigate("/");
+      })
+      .catch((error) => console.log("error", error));
+  }
 
-function InnerMovie() {
-    const { movie } = useLoaderData()
-    return (
-        <div>
-            <h1>{movie.name}</h1>
-            <h2>{movie.year}</h2>
-            <Link to="/">Back</Link>
-            <Link to={`/edit/${movie.id}`} className="btn btn-warning">Edit</Link>
-            <Button onClick={deleteMovie.bind(this, movie.id)} className="btn btn-danger">Delete</Button>
-        </div>
-    );
+  return (
+    <div>
+      <h1>{movie.name}</h1>
+      <h2>{movie.year}</h2>
+      <Link to="/">Back</Link>
+      <Link to={`/edit/${movie.id}`} className="btn btn-warning">
+        Edit
+      </Link>
+      <Button
+        onClick={deleteMovie.bind(this, movie.id)}
+        className="btn btn-danger"
+      >
+        Delete
+      </Button>
+      {/* <ToastContainer position="top-end">
+        <Toast show={show} delay={3000} autohide>
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Success!</strong>
+          </Toast.Header>
+          <Toast.Body>{movie.name} was deleted!</Toast.Body>
+        </Toast>
+      </ToastContainer> */}
+    </div>
+  );
 }
 
 export default InnerMovie;
