@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Movies from './components/Movies';
 import InnerMovie from './components/InnerMovie';
 import EditMovie from './components/EditMovie';
+import CreateMovie from './components/CreateMovie';
 
 // sadasd
 function getAllMovies() {
@@ -57,6 +57,10 @@ const router = createBrowserRouter([
     path: '/edit/:id',
     element: <EditMovie />,
     loader: getMovie
+  },
+  {
+    path: '/create/',
+    element: <CreateMovie />
   }
 ]);
 

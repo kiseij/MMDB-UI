@@ -4,7 +4,9 @@ import { Link, useLoaderData } from "react-router-dom";
 function Movies() {
     const { movies } = useLoaderData()
     return (
-        <Table striped bordered hover>
+        <div>
+            <Link to="/create">Create</Link>
+            <Table striped bordered hover>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -22,6 +24,7 @@ function Movies() {
                 ))}
             </tbody>
         </Table>
+        </div>
     );
 }
 
