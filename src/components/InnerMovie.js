@@ -1,4 +1,10 @@
-import { Button, Toast, ToastContainer, ButtonGroup } from "react-bootstrap";
+import {
+  Button,
+  Toast,
+  ToastContainer,
+  ButtonGroup,
+  Card,
+} from "react-bootstrap";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -25,24 +31,34 @@ function InnerMovie() {
   }
 
   return (
-    <div>
-      <h1>{movie.name}</h1>
-      <h2>{movie.year}</h2>
-      <ButtonGroup>
-        <Link to="/" className="btn btn-secondary">
-          Back
-        </Link>
-        <Link to={`/edit/${movie.id}`} className="btn btn-secondary">
-          Edit
-        </Link>
-        <Button
-          onClick={deleteMovie.bind(this, movie.id)}
-          className="btn btn-secondary"
-        >
-          Delete
-        </Button>
-      </ButtonGroup>
-      {/* <ToastContainer position="top-end">
+    <Card>
+      <Card.Header>
+        <h2>{movie.year}</h2>
+      </Card.Header>
+      <Card.Body>
+        <Card.Title>
+          <h1>{movie.name}</h1>
+        </Card.Title>
+        <Card.Text>
+          With supporting text below as a natural lead-in to additional content.
+        </Card.Text>
+        <ButtonGroup>
+          <Link to="/" className="btn btn-secondary">
+            Back
+          </Link>
+          <Link to={`/edit/${movie.id}`} className="btn btn-secondary">
+            Edit
+          </Link>
+          <Button
+            onClick={deleteMovie.bind(this, movie.id)}
+            className="btn btn-secondary"
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
+      </Card.Body>
+    </Card>
+    /* <ToastContainer position="top-end">
         <Toast show={show} delay={3000} autohide>
           <Toast.Header>
             <img
@@ -54,8 +70,7 @@ function InnerMovie() {
           </Toast.Header>
           <Toast.Body>{movie.name} was deleted!</Toast.Body>
         </Toast>
-      </ToastContainer> */}
-    </div>
+      </ToastContainer> */
   );
 }
 
