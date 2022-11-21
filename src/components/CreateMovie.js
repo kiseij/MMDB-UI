@@ -38,7 +38,7 @@ function CreateMovie() {
         <Form.Control type="text" name="name" placeholder="enter movie title" />
         <Form.Label>Movie year</Form.Label>
         <Form.Control type="text" name="year" placeholder="enter movie year" />
-        <Button variant="primary" type="submit">
+        <Button variant="outline-primary" type="submit">
           Save
         </Button>
       </Form>

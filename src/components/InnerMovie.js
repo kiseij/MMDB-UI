@@ -1,4 +1,4 @@
-import { Button, Toast, ToastContainer } from "react-bootstrap";
+import { Button, Toast, ToastContainer, ButtonGroup } from "react-bootstrap";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -8,8 +8,6 @@ function InnerMovie() {
   const [show, setShow] = useState(false);
 
   function deleteMovie(id, e) {
-    
-    
     // issoktu modalas ir lauktu kol useris paspaus taip noriu trint ir tik tada testu koda zemyn
     // jei paspaudzia ne, cancel cancel
 
@@ -30,16 +28,20 @@ function InnerMovie() {
     <div>
       <h1>{movie.name}</h1>
       <h2>{movie.year}</h2>
-      <Link to="/">Back</Link>
-      <Link to={`/edit/${movie.id}`} className="btn btn-warning">
-        Edit
-      </Link>
-      <Button
-        onClick={deleteMovie.bind(this, movie.id)}
-        className="btn btn-danger"
-      >
-        Delete
-      </Button>
+      <ButtonGroup>
+        <Link to="/" className="btn btn-secondary">
+          Back
+        </Link>
+        <Link to={`/edit/${movie.id}`} className="btn btn-secondary">
+          Edit
+        </Link>
+        <Button
+          onClick={deleteMovie.bind(this, movie.id)}
+          className="btn btn-secondary"
+        >
+          Delete
+        </Button>
+      </ButtonGroup>
       {/* <ToastContainer position="top-end">
         <Toast show={show} delay={3000} autohide>
           <Toast.Header>
