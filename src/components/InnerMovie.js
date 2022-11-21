@@ -40,7 +40,15 @@ function InnerMovie() {
           <h1>{movie.name}</h1>
         </Card.Title>
         <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+            {/* if movie.genre and movie.genre.name */}
+            <span>
+                <strong>Genre:</strong> {movie.genre && movie.genre.name}
+            </span>
+            <br/>
+            {/* if movie.director and movie.director.name */}
+            <span>
+                <strong>Director:</strong> {movie.director ? movie.director.name : "No director selected"}
+            </span>
         </Card.Text>
         <ButtonGroup>
           <Link to="/" className="btn btn-secondary">

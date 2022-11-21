@@ -75,12 +75,12 @@ function App() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <NavDropdown title="Entities" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Movies</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">
-                    Directors
+                <NavDropdown title="Docs" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="http://localhost:8080/swagger-ui/index.html#/" target="_blank">Swagger</NavDropdown.Item>
+                  <NavDropdown.Item href="https://github.com/kiseij/MMDB" target="_blank">
+                    API Code
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">Genres</NavDropdown.Item>
+                  <NavDropdown.Item href="https://github.com/kiseij/MMDB-UI" target="_blank">UI Code</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               <Nav>
