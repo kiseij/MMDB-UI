@@ -12,9 +12,16 @@ import { useReducer } from "react";
 let directors = null;
 let genres = null;
 
+const token = localStorage.getItem("token");
+let headers = new Headers();
+if (token) {
+  headers.append("Authorization", "Bearer " + token);
+}
+
 function GetDirectors() {
   let options = {
     method: "GET",
+    headers: headers,
   };
 
   fetch(`http://localhost:8080/api/directors`, options)
@@ -28,6 +35,7 @@ function GetDirectors() {
 function GetGenres() {
   let options = {
     method: "GET",
+    headers: headers,
   };
 
   fetch(`http://localhost:8080/api/genres`, options)
@@ -39,8 +47,10 @@ function GetGenres() {
     .catch((error) => console.log(error));
 }
 
-GetDirectors();
-GetGenres();
+if (token) {
+  GetDirectors();
+  GetGenres();
+}
 
 function EditMovie() {
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -63,6 +73,9 @@ function EditMovie() {
 
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
+    if (token) {
+      headers.append("Authorization", "Bearer " + token);
+    }
 
     const payload = JSON.stringify(movie);
 
@@ -79,7 +92,13 @@ function EditMovie() {
           navigate("/movie/" + result.id);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        if (error && error.error) {
+          console.log("error", JSON.stringify(error));
+        } else {
+          window.location.href = "/login";
+        }
+      });
   }
 
   if (!directors || !genres) {

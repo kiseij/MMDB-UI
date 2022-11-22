@@ -8,13 +8,21 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useReducer } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let directors = null;
 let genres = null;
+const token = localStorage.getItem("token");
+let headers = new Headers();
+if (token) {
+  headers.append("Authorization", "Bearer " + token);
+}
 
 function GetDirectors() {
   let options = {
     method: "GET",
+    headers: headers,
   };
 
   fetch(`http://localhost:8080/api/directors`, options)
@@ -22,12 +30,15 @@ function GetDirectors() {
     .then((result) => {
       directors = result;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log("error", error);
+    });
 }
 
 function GetGenres() {
   let options = {
     method: "GET",
+    headers: headers,
   };
 
   fetch(`http://localhost:8080/api/genres`, options)
@@ -39,8 +50,10 @@ function GetGenres() {
     .catch((error) => console.log(error));
 }
 
-GetDirectors();
-GetGenres();
+if (token) {
+  GetDirectors();
+  GetGenres();
+}
 
 function CreateMovie() {
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -63,6 +76,9 @@ function CreateMovie() {
 
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
+    if (token) {
+      headers.append("Authorization", "Bearer " + token);
+    }
 
     const payload = JSON.stringify(movie);
 
@@ -80,7 +96,13 @@ function CreateMovie() {
           navigate("/movie/" + result.id);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        if (error && error.error) {
+          console.log("error", JSON.stringify(error));
+        } else {
+          window.location.href = "/login";
+        }
+      });
   }
 
   if (!directors || !genres) {

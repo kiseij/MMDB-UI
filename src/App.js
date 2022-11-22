@@ -1,21 +1,32 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Movies from "./components/Movies";
 import InnerMovie from "./components/InnerMovie";
 import EditMovie from "./components/EditMovie";
 import CreateMovie from "./components/CreateMovie";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import Login from "./components/Login";
+
+const token = localStorage.getItem("token");
+let headers = new Headers();
+if (token) {
+  headers.append("Authorization", "Bearer " + token);
+}
 
 function getAllMovies() {
   const options = {
     method: "GET",
+    headers: headers,
   };
 
   return new Promise((resolve, reject) => {
     fetch("http://localhost:8080/api/movies", options)
       .then((response) => response.json())
       .then((result) => resolve(result))
-      .catch((error) => reject(error));
+      .catch((error) => {
+        window.location.href = "/login";
+        reject(error);
+      });
   });
 }
 
@@ -27,13 +38,17 @@ async function getMovies() {
 function getOneMovie(id) {
   const options = {
     method: "GET",
+    headers: headers,
   };
 
   return new Promise((resolve, reject) => {
     fetch(`http://localhost:8080/api/movies/${id}`, options)
       .then((response) => response.json())
       .then((result) => resolve(result))
-      .catch((error) => reject(error));
+      .catch((error) => {
+        window.location.href = "/login";
+        reject(error);
+      });
   });
 }
 
@@ -62,9 +77,18 @@ const router = createBrowserRouter([
     path: "/create/",
     element: <CreateMovie />,
   },
+  {
+    path: "/login/",
+    element: <Login />,
+  },
 ]);
 
 function App() {
+  function logoutAction() {
+    console.log("loggin out");
+    localStorage.clear();
+    window.location.href = "/login";
+  }
   return (
     <div className={"container-wrapper container-fluid"}>
       <div className={"container"}>
@@ -94,6 +118,12 @@ function App() {
                     UI Code
                   </NavDropdown.Item>
                 </NavDropdown>
+              </Nav>
+              <Nav>
+                <Nav.Link href="/login">Login</Nav.Link>
+              </Nav>
+              <Nav>
+                <Nav.Link onClick={logoutAction}>Logout</Nav.Link>
               </Nav>
               <Nav>
                 <Nav.Link href="/create">Create new movie</Nav.Link>

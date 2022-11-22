@@ -16,9 +16,15 @@ function InnerMovie() {
   function deleteMovie(id, e) {
     // issoktu modalas ir lauktu kol useris paspaus taip noriu trint ir tik tada testu koda zemyn
     // jei paspaudzia ne, cancel cancel
+    const token = localStorage.getItem("token");
+    let headers = new Headers();
+    if (token) {
+      headers.append("Authorization", "Bearer " + token);
+    }
 
     const options = {
       method: "DELETE",
+      headers: headers,
     };
 
     fetch(`http://localhost:8080/api/movies/${id}`, options)
