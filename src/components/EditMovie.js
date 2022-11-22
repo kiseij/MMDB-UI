@@ -12,7 +12,6 @@ import { useReducer } from "react";
 let directors = null;
 let genres = null;
 
-
 function GetDirectors() {
   let options = {
     method: "GET",
@@ -50,7 +49,7 @@ function EditMovie() {
   }
   const { movie } = useLoaderData();
   let navigate = useNavigate();
-  
+
   function save(e) {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -59,7 +58,7 @@ function EditMovie() {
       name: data.get("name"),
       year: data.get("year"),
       genreId: data.get("genre"),
-      directorId: data.get("director")
+      directorId: data.get("director"),
     };
 
     let headers = new Headers();
@@ -76,7 +75,9 @@ function EditMovie() {
     fetch(`http://localhost:8080/api/movies/${id}`, options)
       .then((response) => response.json())
       .then((result) => {
-        navigate("/movie/" + result.id);
+        if (!result.error) {
+          navigate("/movie/" + result.id);
+        }
       })
       .catch((error) => console.log("error", error));
   }
@@ -112,30 +113,38 @@ function EditMovie() {
                 />
               </Form.Group>
               <Form.Group className="mb-3">
-              <Form.Label>Directors</Form.Label>
-              <Form.Select aria-label="select a director" name="director" defaultValue={movie.directorId}>
-                <option disabled>select a director</option>
-                {directors &&
-                  directors.map((item, index) => (
-                    <option key={index} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
+                <Form.Label>Directors</Form.Label>
+                <Form.Select
+                  aria-label="select a director"
+                  name="director"
+                  defaultValue={movie.directorId}
+                >
+                  <option disabled>select a director</option>
+                  {directors &&
+                    directors.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Genres</Form.Label>
-              <Form.Select aria-label="select a genre" name="genre" defaultValue={movie.genreId}>
-                <option disabled>select a genre</option>
-                {genres &&
-                  genres.map((item, index) => (
-                    <option key={index} value={item.id}>
-                      {item.name}
-                    </option>
-                  ))}
-              </Form.Select>
-            </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Genres</Form.Label>
+                <Form.Select
+                  aria-label="select a genre"
+                  name="genre"
+                  defaultValue={movie.genreId}
+                >
+                  <option disabled>select a genre</option>
+                  {genres &&
+                    genres.map((item, index) => (
+                      <option key={index} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
               <Form.Control type="hidden" name="id" defaultValue={movie.id} />
               <ButtonGroup>
                 <Button variant="btn btn-secondary" type="submit">

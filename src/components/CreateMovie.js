@@ -9,10 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useReducer } from "react";
 
-
 let directors = null;
 let genres = null;
-
 
 function GetDirectors() {
   let options = {
@@ -77,13 +75,14 @@ function CreateMovie() {
     fetch(`http://localhost:8080/api/movies`, options)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        navigate("/movie/" + result.id);
+        console.log("success", result);
+        if (!result.error) {
+          navigate("/movie/" + result.id);
+        }
       })
       .catch((error) => console.log("error", error));
   }
 
- 
   if (!directors || !genres) {
     setTimeout(() => updateComponent(), 0);
   }
@@ -107,7 +106,7 @@ function CreateMovie() {
             <Form.Group className="mb-3">
               <Form.Label>Movie year</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="year"
                 placeholder="enter movie year"
               />

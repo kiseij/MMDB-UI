@@ -6,7 +6,6 @@ import EditMovie from "./components/EditMovie";
 import CreateMovie from "./components/CreateMovie";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-// sadasd
 function getAllMovies() {
   const options = {
     method: "GET",
@@ -76,11 +75,24 @@ function App() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <NavDropdown title="Docs" id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="http://localhost:8080/swagger-ui/index.html#/" target="_blank">Swagger</NavDropdown.Item>
-                  <NavDropdown.Item href="https://github.com/kiseij/MMDB" target="_blank">
+                  <NavDropdown.Item
+                    href="http://localhost:8080/swagger-ui/index.html#/"
+                    target="_blank"
+                  >
+                    Swagger
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="https://github.com/kiseij/MMDB"
+                    target="_blank"
+                  >
                     API Code
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="https://github.com/kiseij/MMDB-UI" target="_blank">UI Code</NavDropdown.Item>
+                  <NavDropdown.Item
+                    href="https://github.com/kiseij/MMDB-UI"
+                    target="_blank"
+                  >
+                    UI Code
+                  </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               <Nav>
